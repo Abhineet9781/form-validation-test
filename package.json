@@ -1,0 +1,14 @@
+{
+  "name": "automated-form-validation-testing-tool",
+  "version": "1.0.0",
+  "description": "Selenium-based automated test suite for a registration form, covering 15+ validation scenarios.",
+  "main": "tests/formValidation.test.js",
+  "scripts": {
+    "test": "node tests/formValidation.test.js"
+  },
+  "dependencies": {
+    "selenium-webdriver": "^4.20.0"
+  },
+  "author": "Abhineet Kumar",
+  "license": "MIT"
+}

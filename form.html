@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Registration Form</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 400px; margin: 50px auto; }
+  label { display: block; margin-top: 12px; font-weight: bold; }
+  input { width: 100%; padding: 8px; box-sizing: border-box; margin-top: 4px; }
+  .error { color: red; font-size: 13px; min-height: 16px; }
+  button { margin-top: 20px; padding: 10px 20px; }
+  #success { color: green; font-weight: bold; margin-top: 15px; }
+</style>
+</head>
+<body>
+<h2>Registration Form</h2>
+<form id="regForm">
+  <label for="name">Full Name</label>
+  <input type="text" id="name" maxlength="50">
+  <div class="error" id="name-error"></div>
+
+  <label for="email">Email</label>
+  <input type="text" id="email">
+  <div class="error" id="email-error"></div>
+
+  <label for="password">Password</label>
+  <input type="password" id="password">
+  <div class="error" id="password-error"></div>
+
+  <label for="confirmPassword">Confirm Password</label>
+  <input type="password" id="confirmPassword">
+  <div class="error" id="confirmPassword-error"></div>
+
+  <button type="submit" id="submit">Register</button>
+  <div id="success"></div>
+</form>
+
+<script>
+const form = document.getElementById('regForm');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const passwordInput = document.getElementById('password');
+const confirmPasswordInput = document.getElementById('confirmPassword');
+const success = document.getElementById('success');
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault();
+  success.textContent = '';
+  let isValid = true;
+
+  // Name validation
+  const nameVal = nameInput.value.trim();
+  if (nameVal === '') {
+    document.getElementById('name-error').textContent = 'Name is required';
+    isValid = false;
+  } else if (nameVal.length > 50) {
+    document.getElementById('name-error').textContent = 'Name must be 50 characters or less';
+    isValid = false;
+  } else if (!/^[A-Za-z\s]+$/.test(nameVal)) {
+    document.getElementById('name-error').textContent = 'Name must contain only letters and spaces';
+    isValid = false;
+  } else {
+    document.getElementById('name-error').textContent = '';
+  }
+
+  // Email validation
+  const emailVal = emailInput.value.trim();
+  if (emailVal === '') {
+    document.getElementById('email-error').textContent = 'Email is required';
+    isValid = false;
+  } else if (!emailRegex.test(emailVal)) {
+    document.getElementById('email-error').textContent = 'Please enter a valid email address';
+    isValid = false;
+  } else {
+    document.getElementById('email-error').textContent = '';
+  }
+
+  // Password validation
+  const passwordVal = passwordInput.value;
+  if (passwordVal === '') {
+    document.getElementById('password-error').textContent = 'Password is required';
+    isValid = false;
+  } else if (passwordVal.length < 8) {
+    document.getElementById('password-error').textContent = 'Password must be at least 8 characters';
+    isValid = false;
+  } else if (!/[A-Z]/.test(passwordVal) || !/[0-9]/.test(passwordVal)) {
+    document.getElementById('password-error').textContent = 'Password must contain at least one uppercase letter and one number';
+    isValid = false;
+  } else {
+    document.getElementById('password-error').textContent = '';
+  }
+
+  // Confirm password validation
+  const confirmVal = confirmPasswordInput.value;
+  if (confirmVal === '') {
+    document.getElementById('confirmPassword-error').textContent = 'Please confirm your password';
+    isValid = false;
+  } else if (confirmVal !== passwordVal) {
+    document.getElementById('confirmPassword-error').textContent = 'Passwords do not match';
+    isValid = false;
+  } else {
+    document.getElementById('confirmPassword-error').textContent = '';
+  }
+
+  if (isValid) {
+    success.textContent = 'Registration successful!';
+    form.reset();
+  }
+});
+</script>
+</body>
+</html>
